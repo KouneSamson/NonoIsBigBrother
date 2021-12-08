@@ -60,24 +60,33 @@ function exPredictions(predicts)
     if(predicts.length != 0)
     {
         predicts.forEach(function(objet){
-            BoundingBox(objet.bbox);
+            if(objet.score > 0.66)
+            {
+                BoundingBox(objet.bbox,objet);
+            }
         });
     }
 }
 
-function BoundingBox(bounds)
+function BoundingBox(bounds, objD)
 {
-    drawBox(bounds[0],bounds[1],bounds[2],bounds[3], CamBox);
+    var objName = document.createElement("p");
+    objName.innerText = objD.class + " - " + Math.round(parseFloat(objD.score)*100) + "%";
+    objName.style.color = "#ff00ff";
+    objName.style.backgroundColor = "black";
+    drawBox(bounds[0],bounds[1],bounds[2],bounds[3], CamBox, objName);
 }
 
-function drawBox(left, top, width, height, parent)
+function drawBox(left, top, width, height, parent, objName)
 {
     var winw = window.innerWidth;
     var oleft = winw/12;
     var nleft = left + 2*oleft/3 ;
     
     var bBox = document.createElement("div");
-    
+
+    bBox.appendChild(objName);
+
     bBox.setAttribute('class','bbox');
     bBox.style.top = top + "px";
     bBox.style.left = nleft + "px";
