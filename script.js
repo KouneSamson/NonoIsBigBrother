@@ -73,23 +73,20 @@ function BoundingBox(bounds, objD)
     var objName = document.createElement("p");
     objName.innerText = objD.class + " - " + Math.round(parseFloat(objD.score)*100) + "%";
     objName.style.color = "#ff00ff";
-    objName.style.backgroundColor = "black";
+    objName.style.backgroundColor = "#000000aa";
+    objName.style.textAlign = "center";
     drawBox(bounds[0],bounds[1],bounds[2],bounds[3], CamBox, objName);
 }
 
 function drawBox(left, top, width, height, parent, objName)
-{
-    var winw = window.innerWidth;
-    var oleft = winw/12;
-    var nleft = left + 2*oleft/3 ;
-    
+{    
     var bBox = document.createElement("div");
 
     bBox.appendChild(objName);
 
     bBox.setAttribute('class','bbox');
     bBox.style.top = top + "px";
-    bBox.style.left = nleft + "px";
+    bBox.style.left = left + "px";
     bBox.style.width = width + "px";
     bBox.style.height = height + "px";
     
