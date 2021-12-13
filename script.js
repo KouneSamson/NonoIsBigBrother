@@ -1,17 +1,19 @@
+// initialisation du modèle de prédiciton
 var model = undefined;
 cocoSsd.load().then(function (loadedModel) {
     model = loadedModel;
   });
-const video = document.querySelector("#webcam");
 
+// préparation des variable nécessaire à l'affichage sur la page HTML
 var camIsOn = false;
-
-var animation = undefined;
+const video = document.querySelector("#webcam");
 var Webcam = document.querySelector("#webc");
 var CamBox = document.querySelector("#Camera");
 var progressB = document.querySelector("#outils");
 var boxSet = [];
+var animation = undefined;
 
+// Allume la webcam et lance la boucle de prédiction d'objet visible par celle-ci
 function CameraOn ()
 {
     camIsOn = true;
@@ -43,6 +45,7 @@ function CameraOn ()
     }
 }
 
+// coupe le flux de la camera et nettoie le cache du flux
 function CameraOff()
 {
     camIsOn = false;
@@ -60,6 +63,7 @@ function CameraOff()
     progressB.innerHTML = "<h3 class='title has-text-centered has-text-white pb-2'>Objets Reconnus</h3>"
 }
 
+// mets à jour l'affichage HTML avec des bounding box et des barres de progression vis à vis des résultats de la prédiciton
 function exPredictions(predicts)
 {
     clearboxSet();
@@ -84,6 +88,8 @@ function exPredictions(predicts)
     }
 }
 
+
+// prépare les donnés pour le dessins des bounding box et des barres de progressions
 function BoundingBox(bounds, objD)
 {
     var objName = document.createElement("p");
@@ -98,6 +104,7 @@ function BoundingBox(bounds, objD)
     `<p class="pname m-2"><b>` + objD.class + " " + score + "% " + `</b><progress class="progress is-link" value="` + score + `" max="100"></progress></p>`;
 }
 
+// dessines les bounding box
 function drawBox(left, top, width, height, parent, objName)
 {    
     var bBox = document.createElement("div");
@@ -115,6 +122,7 @@ function drawBox(left, top, width, height, parent, objName)
     boxSet.push(bBox);
 }
 
+// nettoie l'ensemble des bounding box
 function clearboxSet()
 {
     boxSet.forEach(function(box){
